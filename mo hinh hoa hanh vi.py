@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Thiết lập các thông số của mô hình
-mu = 800  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
+mu = 700  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
 sigma = 200  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
 lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
