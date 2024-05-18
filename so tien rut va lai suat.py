@@ -10,7 +10,7 @@ annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
 # Tạo dữ liệu tuyến tính cơ bản và thêm nhiễu nhỏ
-np.random.seed(42)  # Để đảm bảo tính tái lập
+np.random.seed(99)  # Để đảm bảo tính tái lập
 base_withdrawals = np.linspace(mu - sigma, mu + sigma, months)
 noise = np.random.normal(0, sigma, months)  # Nhiễu nhỏ
 withdrawals = base_withdrawals + noise
