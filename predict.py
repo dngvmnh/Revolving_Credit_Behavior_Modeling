@@ -9,14 +9,14 @@ import matplotlib.pyplot as plt
 # Thiết lập các thông số của mô hình
 mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
 sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 9  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
+lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
 lãi_suất = 0.029  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
 # Mô phỏng số tiền rút mỗi lần và thời gian đáo hạn
 np.random.seed(42)  # Để đảm bảo tính tái lập
 rút_tiền = np.random.normal(mu, sigma, months).astype(int)
-durations = np.random.exponential(scale=1/lambda_rate + 1, size=months).astype(int)
+durations = np.random.exponential(scale=1/lambda_rate , size=months).astype(int)+1
 
 # Giới hạn số tiền rút không quá 1000 tỉ đồng
 rút_tiền = np.clip(rút_tiền, 0, 1000)

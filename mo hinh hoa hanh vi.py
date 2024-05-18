@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Thiết lập các thông số của mô hình
 mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
 sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
+lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
 monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
@@ -13,14 +13,14 @@ months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 # Mô phỏng số tiền rút mỗi lần và thời gian đáo hạn
 np.random.seed(42)  # Để đảm bảo tính tái lập
 withdrawals = np.random.normal(mu, sigma, months).astype(int)
-durations = np.random.exponential(scale=1/lambda_rate , size=months).astype(int)+1
+durations = np.random.exponential(scale=1/lambda_rate, size=months).astype(int) + 1
 
 # Giới hạn số tiền rút không quá 1000 tỉ đồng
 withdrawals = np.clip(withdrawals, 0, 1000)
 
 # Tạo DataFrame từ dữ liệu mô phỏng
 df = pd.DataFrame({
-    'Tháng': pd.date_range(start='2025-01-01', periods=months, freq='ME'),
+    'Tháng': pd.date_range(start='2025-01-01', periods=months, freq='M'),
     'Số tiền rút (tỉ đồng)': withdrawals,
     'Thời gian đáo hạn (tháng)': durations
 })
@@ -31,7 +31,7 @@ print(df)
 
 # Tính toán tổng chi phí lãi suất
 total_interest = 0
-balance = 0
+balance = 1000  # Số dư ban đầu là 1000 tỉ đồng
 
 # Lưu trữ lịch sử số dư và thời gian đáo hạn
 balance_history = []
@@ -44,14 +44,15 @@ fluctuation_factor = 0.1
 
 for month in range(months):
     # Rút tiền vào đầu tháng
-    balance += withdrawals[month]
-    balance_history.append((withdrawals[month], durations[month]))
+    withdrawal_amount = withdrawals[month]
+    balance -= withdrawal_amount
+    balance_history.append((withdrawal_amount, durations[month]))
 
     # Cập nhật và trả nợ theo thời gian đáo hạn
     new_balance_history = []
     for amount, duration in balance_history:
         if duration <= 1:
-            balance -= amount  # Trả nợ nếu đáo hạn
+            balance += amount  # Cộng lại tiền khi đến hạn
         else:
             new_balance_history.append((amount, duration - 1))
     balance_history = new_balance_history
@@ -60,8 +61,8 @@ for month in range(months):
     fluctuation = np.random.uniform(-fluctuation_factor, fluctuation_factor)
     current_annual_interest_rate = annual_interest_rate * (1 + fluctuation)
 
-    interest = (1+current_annual_interest_rate)**(1/ 12)-1  # Tính lãi hàng tháng
-    total_interest += interest
+    interest = (1 + current_annual_interest_rate)**(1 / 12) - 1  # Tính lãi hàng tháng
+    total_interest += balance * interest
 
     # Lưu trữ thông tin cập nhật mỗi tháng
     monthly_update.append({
