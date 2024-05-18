@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Thiết lập các thông số của mô hình
 mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
 sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 9 tháng)
+lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (thời gian đáo hạn trung bình là 5 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
@@ -28,8 +28,12 @@ df = pd.DataFrame({
     'Thời gian đáo hạn (tháng)': durations
 })
 
+# Tính lãi suất hàng tháng từ lãi suất 3.5% theo năm
+fixed_annual_interest_rate = 0.035
+fixed_monthly_interest_rate = (1 + fixed_annual_interest_rate)**(1/12) - 1
+
 # Tính toán lãi suất dao động hàng tháng và hàng năm
-fluctuation_factor = 0.1
+fluctuation_factor = 0.5
 monthly_update = []
 
 for month in range(months):
@@ -64,10 +68,11 @@ ax1.tick_params(axis='y', labelcolor='tab:blue')
 ax2 = ax1.twinx()
 ax2.set_ylabel('Lãi suất hàng tháng', color='tab:red')
 ax2.plot(df_update['Tháng'], df_update['Lãi suất hàng tháng'], marker='x', color='tab:red', label='Lãi suất hàng tháng')
+ax2.axhline(y=fixed_monthly_interest_rate, color='green', linestyle='--', linewidth=2, label='Lãi suất cố định hàng tháng (3.5% năm)')
 ax2.tick_params(axis='y', labelcolor='tab:red')
 
 fig.tight_layout()
 plt.title('Mối tương quan giữa Lãi suất và Số tiền rút từ 2025 đến 2034')
+fig.legend(loc='upper left')
 plt.grid(True)
-plt.legend()
 plt.show()

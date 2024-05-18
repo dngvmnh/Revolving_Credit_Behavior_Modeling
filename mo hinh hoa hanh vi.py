@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Thiết lập các thông số của mô hình
 mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
 sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
+lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (thời gian đáo hạn trung bình là 3 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
 monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
