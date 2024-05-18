@@ -5,24 +5,45 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
+import csv
 
-# Thiết lập các thông số của mô hình
-mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
-sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
-lãi_suất = 0.029  # Lãi suất cố định mỗi tháng
+annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
+monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
-# Mô phỏng số tiền rút mỗi lần và thời gian đáo hạn
-np.random.seed(42)  # Để đảm bảo tính tái lập
-rút_tiền = np.random.normal(mu, sigma, months).astype(int)
-durations = np.random.exponential(scale=1/lambda_rate , size=months).astype(int)+1
+withdrawals = []
+durations = []
+interests = []
+current_annual_interest_rates = []
 
-# Giới hạn số tiền rút không quá 1000 tỉ đồng
-rút_tiền = np.clip(rút_tiền, 0, 1000)
+file_path = 'data.csv'
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        so_tien_rut = int(row['So tien rut'])
+        withdrawals.append(so_tien_rut)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        thoi_gian_dao_han = int(row['Thoi gian dao han'])
+        durations.append(thoi_gian_dao_han)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        lai_thang = float(row['Lai thang'])
+        interests.append(lai_thang)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        lai_nam = float(row['Lai nam'])
+        current_annual_interest_rates.append(lai_nam)
 
 # Tạo DataFrame
-df = pd.DataFrame({'Rút tiền': rút_tiền, 'Thời gian đáo hạn': durations})
+df = pd.DataFrame({'Rút tiền': withdrawals, 'Thời gian đáo hạn': durations})
 
 # Chia dữ liệu thành các biến đặc trưng và biến mục tiêu
 X = df[['Thời gian đáo hạn']]

@@ -1,25 +1,42 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import csv
 
-# Thiết lập các thông số của mô hình
-mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
-sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (thời gian đáo hạn trung bình là 5 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
+monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
-# Tạo dữ liệu tuyến tính cơ bản và thêm nhiễu nhỏ
-np.random.seed(99)  # Để đảm bảo tính tái lập
-base_withdrawals = np.linspace(mu - sigma, mu + sigma, months)
-noise = np.random.normal(0, sigma, months)  # Nhiễu nhỏ
-withdrawals = base_withdrawals + noise
+withdrawals = []
+durations = []
+interests = []
+current_annual_interest_rates = []
 
-# Giới hạn số tiền rút không quá 1000 tỉ đồng
-withdrawals = np.clip(withdrawals, 0, 1000)
+file_path = 'data.csv'
 
-# Tạo dữ liệu cho thời gian đáo hạn ổn định
-durations = np.linspace(1, 12, months).astype(int)
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        so_tien_rut = int(row['So tien rut'])
+        withdrawals.append(so_tien_rut)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        thoi_gian_dao_han = int(row['Thoi gian dao han'])
+        durations.append(thoi_gian_dao_han)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        lai_thang = float(row['Lai thang'])
+        interests.append(lai_thang)
+
+with open(file_path, 'r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        lai_nam = float(row['Lai nam'])
+        current_annual_interest_rates.append(lai_nam)
 
 # Tạo DataFrame từ dữ liệu mô phỏng
 df = pd.DataFrame({

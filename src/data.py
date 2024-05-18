@@ -11,7 +11,7 @@ monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất c�
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 
 # Mô phỏng số tiền rút mỗi lần và thời gian đáo hạn
-np.random.seed(42)  # Để đảm bảo tính tái lập
+np.random.seed(99)  # Để đảm bảo tính tái lập
 withdrawals = np.random.normal(mu, sigma, months).astype(int)
 durations = np.random.exponential(scale=1/lambda_rate, size=months).astype(int) + 1
 
@@ -40,7 +40,7 @@ balance_history = []
 monthly_update = []
 
 # Hệ số dao động nhỏ cho lãi suất hàng năm (±5%)
-fluctuation_factor = 0.1
+fluctuation_factor = 0.05
 
 for month in range(months):
     # Rút tiền vào đầu tháng
@@ -108,3 +108,21 @@ plt.title('Số dư mỗi tháng từ 2025 đến 2034')
 plt.grid(True)
 plt.legend()
 plt.show()
+
+# Hàm xuất dữ liệu thành file CSV
+def export_to_csv(df, df_update, filename):
+    # Gộp dữ liệu từ hai DataFrame
+    merged_df = df.merge(df_update, on='Tháng')
+    
+    # Sắp xếp lại các cột
+    merged_df = merged_df[[
+        'Tháng', 'Số tiền rút (tỉ đồng)', 'Thời gian đáo hạn (tháng)',
+        'Số dư', 'Lãi suất hàng tháng', 'Lãi suất hàng năm'
+    ]]
+    
+    # Xuất ra file CSV
+    merged_df.to_csv(filename, index=False)
+    print(f'Dữ liệu đã được xuất ra file {filename}')
+
+# Gọi hàm để xuất dữ liệu ra file CSV
+export_to_csv(df, df_update, 'financial_data.csv')
