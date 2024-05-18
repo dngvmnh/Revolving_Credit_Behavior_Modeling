@@ -44,52 +44,41 @@ grid_search.fit(X_train, y_train)
 # Lấy mô hình DecisionTreeRegressor tốt nhất
 best_dt_model = grid_search.best_estimator_
 
-# Dự đoán và đánh giá DecisionTreeRegressor
-dt_y_pred = best_dt_model.predict(X_test)
-dt_mse = mean_squared_error(y_test, dt_y_pred)
-print(f"Lỗi bình phương trung bình DecisionTreeRegressor: {dt_mse:.2f}")
-
-# RandomForestRegressor
+# Huấn luyện mô hình RandomForestRegressor
 rf_model = RandomForestRegressor(random_state=42, n_estimators=100, max_depth=5)
 rf_model.fit(X_train, y_train)
 
-# Dự đoán và đánh giá RandomForestRegressor
-rf_y_pred = rf_model.predict(X_test)
-rf_mse = mean_squared_error(y_test, rf_y_pred)
-print(f"Lỗi bình phương trung bình RandomForestRegressor: {rf_mse:.2f}")
+# Dự đoán cho tương lai
+months_future = 120  # Dự đoán cho 10 năm tiếp theo (từ 2035 đến 2044)
+durations_future = np.random.exponential(scale=1/lambda_rate + 1, size=months_future).astype(int)
 
-# Vẽ biểu đồ giá trị thực tế và dự đoán cho DecisionTreeRegressor
-plt.figure(figsize=(10, 6))
-plt.scatter(y_test, dt_y_pred, color='blue', label='Dự đoán DecisionTree')
-plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', lw=2)
-plt.xlabel('Rút tiền thực tế')
-plt.ylabel('Rút tiền dự đoán')
-plt.title('DecisionTreeRegressor: Thực tế vs Dự đoán Rút tiền')
+# Tạo DataFrame cho dự đoán
+df_future = pd.DataFrame({'Thời gian đáo hạn': durations_future})
+
+# Dự đoán với mô hình DecisionTreeRegressor
+dt_future_pred = best_dt_model.predict(df_future)
+
+# Dự đoán với mô hình RandomForestRegressor
+rf_future_pred = rf_model.predict(df_future)
+
+# Vẽ biểu đồ số tiền rút thực tế và dự đoán cho DecisionTreeRegressor
+plt.figure(figsize=(14, 7))
+plt.plot(range(months), rút_tiền, color='blue', label='Rút tiền thực tế')
+plt.plot(range(months, months + months_future), dt_future_pred, color='orange', label='Dự đoán DecisionTree')
+plt.xlabel('Tháng')
+plt.ylabel('Rút tiền (tỉ đồng)')
+plt.title('DecisionTreeRegressor: Rút tiền thực tế và dự đoán trong tương lai')
 plt.grid(True)
 plt.legend()
 plt.show()
 
-# Vẽ biểu đồ giá trị thực tế và dự đoán cho RandomForestRegressor
-plt.figure(figsize=(10, 6))
-plt.scatter(y_test, rf_y_pred, color='green', label='Dự đoán RandomForest')
-plt.plot([min(y_test), max(y_test)], [min(y_test), max(y_test)], color='red', lw=2)
-plt.xlabel('Rút tiền thực tế')
-plt.ylabel('Rút tiền dự đoán')
-plt.title('RandomForestRegressor: Thực tế vs Dự đoán Rút tiền')
+# Vẽ biểu đồ số tiền rút thực tế và dự đoán cho RandomForestRegressor
+plt.figure(figsize=(14, 7))
+plt.plot(range(months), rút_tiền, color='blue', label='Rút tiền thực tế')
+plt.plot(range(months, months + months_future), rf_future_pred, color='green', label='Dự đoán RandomForest')
+plt.xlabel('Tháng')
+plt.ylabel('Rút tiền (tỉ đồng)')
+plt.title('RandomForestRegressor: Rút tiền thực tế và dự đoán trong tương lai')
 plt.grid(True)
 plt.legend()
 plt.show()
-
-# In tập kiểm tra với dự đoán cho DecisionTreeRegressor
-dt_results = X_test.copy()
-dt_results['Rút tiền thực tế'] = y_test
-dt_results['Rút tiền dự đoán'] = dt_y_pred
-print("\nDecisionTreeRegressor: Tập kiểm tra với rút tiền thực tế và dự đoán:")
-print(dt_results)
-
-# In tập kiểm tra với dự đoán cho RandomForestRegressor
-rf_results = X_test.copy()
-rf_results['Rút tiền thực tế'] = y_test
-rf_results['Rút tiền dự đoán'] = rf_y_pred
-print("\nRandomForestRegressor: Tập kiểm tra với rút tiền thực tế và dự đoán:")
-print(rf_results)

@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Thiết lập các thông số của mô hình
-mu = 700  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
-sigma = 200  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
-lambda_rate = 1 / 3  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
+mu = 100  # Kỳ vọng số tiền rút mỗi lần (tỉ đồng)
+sigma = 10  # Độ lệch chuẩn số tiền rút mỗi lần (tỉ đồng)
+lambda_rate = 1 / 5  # Tỷ lệ của phân phối mũ (kỳ vọng thời gian đáo hạn là 3 tháng)
 annual_interest_rate = 0.029  # Lãi suất cố định hàng năm
 monthly_interest_rate = (1 + annual_interest_rate)**(1/12) - 1  # Lãi suất cố định mỗi tháng
 months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
@@ -13,7 +13,7 @@ months = 120  # Số tháng từ tháng 1/2025 đến tháng 12/2034
 # Mô phỏng số tiền rút mỗi lần và thời gian đáo hạn
 np.random.seed(42)  # Để đảm bảo tính tái lập
 withdrawals = np.random.normal(mu, sigma, months).astype(int)
-durations = np.random.exponential(scale=1/lambda_rate + 1, size=months).astype(int)
+durations = np.random.exponential(scale=1/lambda_rate , size=months).astype(int)+1
 
 # Giới hạn số tiền rút không quá 1000 tỉ đồng
 withdrawals = np.clip(withdrawals, 0, 1000)
@@ -40,7 +40,7 @@ balance_history = []
 monthly_update = []
 
 # Hệ số dao động nhỏ cho lãi suất hàng năm (±5%)
-fluctuation_factor = 0.05
+fluctuation_factor = 0.1
 
 for month in range(months):
     # Rút tiền vào đầu tháng
