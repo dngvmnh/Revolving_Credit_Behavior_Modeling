@@ -1,7 +1,7 @@
 ## DEMO
 **1. Graphing ideal interest rate and withdrwals**
 ![lai](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/a3c28e3d-d476-4387-bed4-eb96b90987d5)
-**2. Predictions made by models developed from RandomForestRegressor**
+**2. Predictions made by model developed from RandomForestRegressor**
 ![du doan random forest regressor](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/539b5a86-f0bb-438a-be5c-50031d5054ed)
 **3. Simulating remainders**
 ![so du](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/2e2c5606-c032-43fe-939d-8d7b3e55624c)
