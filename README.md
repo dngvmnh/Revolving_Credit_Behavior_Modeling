@@ -38,6 +38,6 @@ Given the complexity of the problem, we simplify it through certain assumptions 
 
 The effectiveness of our model is assessed by comparing it against real-world scenarios and data. The model helps in predicting the benefits for both the bank and the borrower under various conditions, thus aiding in setting appropriate interest rates.
 
-##5. Applications
+## 5. Applications
 
 Our mathematical model can be utilized by financial institutions to price revolving credit contracts more accurately. It offers flexibility and can be adapted to various contexts beyond the initial assumptions and data used.
