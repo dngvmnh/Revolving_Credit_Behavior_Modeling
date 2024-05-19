@@ -1,5 +1,5 @@
 ## DEMO
-**1. Graphing ideal interest rate and withdrawls**
+**1. Graphing ideal interest rate and withdrawals**
 ![lai](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/a3c28e3d-d476-4387-bed4-eb96b90987d5)
 **2. Predictions made by model developed from RandomForestRegressor**
 ![du doan random forest regressor](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/539b5a86-f0bb-438a-be5c-50031d5054ed)
