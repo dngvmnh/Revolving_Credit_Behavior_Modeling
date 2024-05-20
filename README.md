@@ -7,27 +7,19 @@
 ![so du](https://github.com/dngvmnh/VM2C_202400000471/assets/133772077/2e2c5606-c032-43fe-939d-8d7b3e55624c)
 
 
-## Overview
+## Project description
 
 This project presents a comprehensive analysis and model for revolving credit, which allows borrowers to withdraw funds multiple times within a credit limit and pay interest only on the withdrawn amount. This approach provides businesses and individuals with greater flexibility in cash flow management to meet short-term financial needs that are unpredictable.
 
-## Table of Contents
-
-1. Introduction
-2. Problem Formulation and Assumptions
-3. Solution Approach
-4. Model Evaluation
-5. Applications
-
-## 1. Introduction
+## Introduction
 
 The project investigates the implications of revolving credit agreements between companies and banks. It addresses the challenges faced by banks in managing risks related to inflation, interest rates, and customer behavior while ensuring profitability.
 
-## 2. Problem Formulation and Assumptions
+## Problem Formulation and Assumptions
 
 Given the complexity of the problem, we simplify it through certain assumptions detailed in specific problem segments. The core issue revolves around managing and modeling the value of money over time, interest rate risks, and the withdrawal patterns of borrowers.
 
-## 3. Solution Approach
+## Solution Approach
 
 - Time Value of Money: We calculate the current value of withdrawals based on market interest rates and contract terms.
 - Interest Rate Risks: We assess scenarios where market interest rates fluctuate and their impact on the bank's profitability.
@@ -38,6 +30,6 @@ Given the complexity of the problem, we simplify it through certain assumptions 
 
 The effectiveness of our model is assessed by comparing it against real-world scenarios and data. The model helps in predicting the benefits for both the bank and the borrower under various conditions, thus aiding in setting appropriate interest rates.
 
-## 5. Applications
+## Applications
 
 Our mathematical model can be utilized by financial institutions to price revolving credit contracts more accurately. It offers flexibility and can be adapted to various contexts beyond the initial assumptions and data used.
