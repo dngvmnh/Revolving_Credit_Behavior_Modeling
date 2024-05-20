@@ -26,7 +26,7 @@ Given the complexity of the problem, we simplify it through certain assumptions 
 - Withdrawal Patterns: We develop a model to predict customer withdrawal behavior using recursive calculation methods.
 - Behavior Simulation: We simulate interest rate fluctuations and customer behavior using Decision Tree Regressor and an enhanced Random Forest Regressor algorithm.
 
-## 4. Model Evaluation
+## Model Evaluation
 
 The effectiveness of our model is assessed by comparing it against real-world scenarios and data. The model helps in predicting the benefits for both the bank and the borrower under various conditions, thus aiding in setting appropriate interest rates.
 
